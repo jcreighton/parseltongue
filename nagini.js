@@ -1,0 +1,9 @@
+class Nagini {
+  constructor() {
+
+  }
+
+  draw() {
+
+  }
+}
