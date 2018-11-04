@@ -18,6 +18,8 @@ class Board {
   createGame() {
     const board = document.createElement('canvas');
     board.className = 'board';
+    board.height = 500;
+    board.width = 500;
 
     return board;
   }
@@ -25,30 +27,65 @@ class Board {
   createOptions() {
     const options = document.createElement('div');
     options.className = 'options';
-
-    const button = document.createElement('button');
-    button.innerText = 'Start';
-    button.addEventListener('click', () => this.hideScreen());
-    this.options.append(button);
+    options.innerHTML = '<span>Start Game</span>'
+    options.addEventListener('click', () => this.handleOption());
 
     return options;
   }
 
-  hideScreen() {
-    // Hide screen
-    // Remove event listener
-  }
-
   build() {
     this.game = document.querySelector('#parseltongue');
-    this.scoreboard = this.createScoreboard();
+    // this.scoreboard = this.createScoreboard();
     this.board = this.createGame();
-    this.options = this.createOptions();
+    // this.options = this.createOptions();
+    this.game.append(this.board);
+    // this.game.append(this.scoreboard, this.board, this.options);
+  }
 
-    this.game.append(this.scoreboard, this.board, this.options);
+  context() {
+    return this.board.getContext('2d');
   }
 }
 
+const snake = new Nagini();
 const board = new Board();
 board.build();
-// board.drawImage();
+const context = board.context();
+context.fillStyle = '#268bd2';
+const body = snake.draw();
+body.forEach((square) => context.fillRect(...square));
+// context.fillRect(x, y, size, size);
+const dx = 10;
+const dy = 0;
+document.body.addEventListener('keydown', ({ keyCode }) => {
+  const UP = 38;
+  const DOWN = 40;
+  const RIGHT = 39;
+  const LEFT = 37;
+
+  switch(keyCode) {
+    case UP:
+      dx = 0;
+      dy = 10;
+    break;
+    case DOWN:
+      dx = 0;
+      dy = -10;
+    break;
+    case RIGHT:
+      dx = 10;
+      dy = 0;
+    break;
+    case LEFT:
+      dx = -10;
+      dy = 0;
+    break;
+    default:
+      dx = 10;
+      dy = 0;
+  }
+});
+
+
+
+
