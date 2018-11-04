@@ -55,8 +55,10 @@ context.fillStyle = '#268bd2';
 const body = snake.draw();
 body.forEach((square) => context.fillRect(...square));
 // context.fillRect(x, y, size, size);
+// requestAnimationFrame ?
 const dx = 10;
 const dy = 0;
+
 document.body.addEventListener('keydown', ({ keyCode }) => {
   const UP = 38;
   const DOWN = 40;
@@ -85,6 +87,17 @@ document.body.addEventListener('keydown', ({ keyCode }) => {
       dy = 0;
   }
 });
+
+function loop() {
+  // move snake
+  // draw snake
+
+  setTimeout(() => {
+    loop();
+  }, 100)
+}
+
+
 
 
 

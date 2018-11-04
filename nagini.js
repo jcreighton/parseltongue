@@ -25,17 +25,20 @@ class Nagini {
       }
     }
 
-    return [...body(this.length)];
+    this.body = [...body(this.length)];
+    return this.body;
   }
 
   move(dx, dy) {
-    // function* body() {
-    //   while (i < length) {
-    //     yield [x + (i * size) , y + (i * size), size, size];
-    //     i++;
-    //   }
-    // }
+    this.x = this.x + dx;
+    this.y = this.y + dy
+    const head = [this.x, this.y];
+    const body = this.body.slice(0, this.length);
+    this.body = [
+      head,
+      ...body,
+    ];
 
-    // return [...body()];
+    return this.body;
   }
 }
