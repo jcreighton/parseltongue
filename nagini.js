@@ -2,43 +2,36 @@ class Nagini {
   constructor() {
     this.length = 4;
     this.size = 20;
-    this.x = 500 / 2 + (2 * 20);
-    this.y = 500 / 2 - (2 * 20);
+    this.x = 480 / 2;
+    this.y = 480 / 2;
 
-    this.draw = this.draw.bind(this);
+    this.build = this.build.bind(this);
+    this.body = this.build(this.x, this.y, 20, this.length);
   }
 
   grow() {
     this.length++;
   }
 
-  draw() {
+  build(x, y, grid, length) {
     let i = 0;
-    let x = this.x;
-    let y = this.y;
-    let size = this.size;
-
     function* body(length) {
       while (i < length) {
+        yield [x , y + (i * grid)];
         i++;
-        yield [x - (i * size) , y, size, size];
       }
     }
 
-    this.body = [...body(this.length)];
-    return this.body;
+    return [...body(length)];
   }
 
-  move(dx, dy) {
-    this.x = this.x + dx;
-    this.y = this.y + dy
-    const head = [this.x, this.y];
-    const body = this.body.slice(0, this.length);
-    this.body = [
+  move(body, dx = 0, dy = 0) {
+    const [x, y] = body[0];
+    const head = [x + dx, y + dy];
+    const c = [
       head,
-      ...body,
+      ...body.slice(0, this.length - 1),
     ];
-
-    return this.body;
+    return c;
   }
 }
