@@ -1,4 +1,4 @@
-import { BOARD_WIDTH, BOARD_HEIGHT, HALF_WIDTH, BOUNDARIES, GRID } from './board.constants.js';
+import { BOARD_WIDTH, BOARD_HEIGHT, HALF_WIDTH, BOUNDARIES, GRID, LOOP_MS } from './board.constants.js';
 import { SNAKE_LENGTH, SNAKE_COLOR } from './snake.constants.js';
 import { UP } from './direction.constants.js';
 import { setDirection } from './direction.js';
@@ -133,7 +133,7 @@ function loop() {
   } else {
     setTimeout(() => {
       loop();
-    }, 200)
+    }, LOOP_MS)
   }
 }
 

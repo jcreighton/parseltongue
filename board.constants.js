@@ -4,3 +4,4 @@ export const HALF_WIDTH = BOARD_WIDTH / 2;
 export const GRID = 20;
 export const COLUMNS = 24;
 export const BOUNDARIES = [0, BOARD_WIDTH - GRID];
+export const LOOP_MS = 200;
