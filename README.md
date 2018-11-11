@@ -1,10 +1,15 @@
 Hello! Thanks for reviewing this project! I chose to do a Harry Potter-themed game since I'm unfamiliar with the original game and also, hello, I am a nerd.
 
-Here are some improvements I didn't get to:
-  - NOT storing everything in global scope (super aware this is bad, would never do in production)
-  - Planned on using import/export but did not want to run a server to prevent CORS issues
-- Code for placing "food" without collision is inefficient as it will take more time to find non-collision coordinates at the snake grows
+Run:
+- `npm install http-server -g`
+- `http-server` to start
+- visit localhost:8080
+
+Some improvements I didn't get to:
 - UI is basic, I chose to focus on the game functionality instead of the UI
 - No start screen
-- Link to Tamagotchi talk
-- Issue with user doing quick keypresses & using the setTimeout
+
+Noted issues:
+- Multiple files not bundled and minified (based on the instructions, this was not needed but wanted to note I'm aware it would be best practice)
+- The code for placing "food" without collision is inefficient as it will take more time to find non-collision coordinates at the snake grows
+- Due to the use of setTimeout, the user can update the state multiple times in a row _at a greater rate than the loop can draw_. If the setTimeout is sufficiently fast, this is less problematic. I've used generator functions before to [resolve async issues with a Tamagotchi game](https://youtu.be/GTzwCqoVOPc) and I might have figured out an approach using generators here.

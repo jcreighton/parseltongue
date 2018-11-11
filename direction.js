@@ -1,4 +1,7 @@
-function setDirection(keyCode, current) {
+import { UP, DOWN, LEFT, RIGHT } from './direction.constants.js';
+import { GRID } from './board.constants.js';
+
+export function setDirection(keyCode, current) {
   const directions = {
     37: LEFT,
     38: UP,
@@ -16,7 +19,7 @@ function setDirection(keyCode, current) {
   let direction = directions[keyCode];
 
   if (!direction || (inverse[current] === direction)) {
-    return [state.direction, ...velocity(state.direction)];
+    return [current, ...velocity(current)];
   }
 
   return [direction, ...velocity(direction)];
@@ -24,18 +27,11 @@ function setDirection(keyCode, current) {
 
 function velocity(direction) {
   const velocities = {
-    [UP]: [0, -20],
-    [DOWN]: [0, 20],
-    [RIGHT]: [20, 0],
-    [LEFT]: [-20, 0],
+    [UP]: [0, -GRID],
+    [DOWN]: [0, GRID],
+    [RIGHT]: [GRID, 0],
+    [LEFT]: [-GRID, 0],
   }
 
   return velocities[direction];
 };
-
-document.body.addEventListener('keydown', ({ keyCode }) => {
-  const [direction, dx, dy] = setDirection(keyCode, state.direction);
-  state.direction = direction;
-  state.dx = dx;
-  state.dy = dy;
-});

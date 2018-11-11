@@ -1,3 +1,11 @@
+import { BOARD_WIDTH, BOARD_HEIGHT, HALF_WIDTH, BOUNDARIES, GRID } from './board.constants.js';
+import { SNAKE_LENGTH, SNAKE_COLOR } from './snake.constants.js';
+import { UP } from './direction.constants.js';
+import { setDirection } from './direction.js';
+import { randomCoordinates, isEqualCoords, isOutsideCoords } from './helpers.js';
+import { hogwartsColor } from './hogwarts.js';
+import { Snake } from './Snake.js';
+
 let state = {};
 
 function build() {
@@ -32,13 +40,13 @@ function build() {
   return [board, board.getContext('2d'), update, visible, hidden];
 }
 
-function getHogwartsCoordinates(parts) {
+function getNonCollisionCoords(parts = state.snake) {
   const coords = randomCoordinates();
   if (!(parts.some(part => isEqualCoords(coords, part)))) {
     return coords;
   }
 
-  return getHogwartsCoordinates(parts);
+  return getNonCollisionCoords(parts);
 }
 
 function draw(part, color) {
@@ -55,15 +63,24 @@ function drawSnake(snake) {
   snake.forEach(part => draw(part, SNAKE_COLOR));
 }
 
-function drawHogwarts(body) {
-  const coords = getHogwartsCoordinates(body);
-  draw(coords, '#f14e32');
+function drawHogwarts(color) {
+  const coords = getNonCollisionCoords();
+  draw(coords, color);
 
   return coords;
 }
 
 const [board, context, score, showGameOverScreen, hideGameOverScreen] = build();
 const nagini = new Snake(SNAKE_LENGTH);
+
+function listenForDirection() {
+  document.body.addEventListener('keydown', ({ keyCode }) => {
+    const [direction, dx, dy] = setDirection(keyCode, state.direction);
+    state.direction = direction;
+    state.dx = dx;
+    state.dy = dy;
+  });
+}
 
 function start() {
   state = {
@@ -72,6 +89,7 @@ function start() {
     direction: UP,
     snake: nagini.build(HALF_WIDTH, HALF_WIDTH, GRID),
     hogwarts: null,
+    house: hogwartsColor(),
     score: 0,
   };
 
@@ -91,17 +109,17 @@ function loop() {
   clear();
 
   if (!state.hogwarts) {
-    state.hogwarts = drawHogwarts(state.snake);
+    state.house = hogwartsColor();
+    state.hogwarts = drawHogwarts(state.house);
   } else {
-    draw(state.hogwarts, '#f14e32')
+    draw(state.hogwarts, state.house);
   }
 
   state.snake = nagini.move(state.snake, state.dx, state.dy);
   drawSnake(state.snake);
 
   const [head, ...body] = state.snake;
-  const collision = BOUNDARIES.some((coord, i) => coord === head[0] || coord === head[1])
-    || body.some(part => isEqualCoords(head, part))
+  const collision = isOutsideCoords(head, BOUNDARIES) || body.some(part => isEqualCoords(head, part));
 
   const eaten = isEqualCoords(head, state.hogwarts);
   if (eaten) {
@@ -119,4 +137,5 @@ function loop() {
   }
 }
 
+listenForDirection();
 start();

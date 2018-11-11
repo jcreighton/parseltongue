@@ -38,3 +38,5 @@ class Snake {
     this.length = length;
   }
 }
+
+export { Snake };
