@@ -14,12 +14,9 @@ function setDirection(keyCode, current) {
   }
 
   let direction = directions[keyCode];
-  if (!direction) {
-    return direction = state.direction;
-  }
 
-  if (inverse[current] === direction) {
-    return;
+  if (!direction || (inverse[current] === direction)) {
+    return [state.direction, ...velocity(state.direction)];
   }
 
   return [direction, ...velocity(direction)];

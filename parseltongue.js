@@ -43,12 +43,12 @@ function getHogwartsCoordinates(parts) {
 
 function draw(part, color) {
   context.fillStyle = color;
-  context.fillRect(...part, 20, 20);
-  context.strokeRect(...part, 20, 20);
+  context.fillRect(...part, GRID, GRID);
+  context.strokeRect(...part, GRID, GRID);
 }
 
 function clear() {
-  context.clearRect(0, 0, 480, 480);
+  context.clearRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
 }
 
 function drawSnake(snake) {
@@ -82,6 +82,7 @@ function start() {
 
 function restart() {
   hideGameOverScreen();
+  nagini.reset();
   clear();
   start();
 }
@@ -114,7 +115,7 @@ function loop() {
   } else {
     setTimeout(() => {
       loop();
-    }, 100)
+    }, 200)
   }
 }
 

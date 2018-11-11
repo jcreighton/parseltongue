@@ -5,3 +5,6 @@ Here are some improvements I didn't get to:
   - Planned on using import/export but did not want to run a server to prevent CORS issues
 - Code for placing "food" without collision is inefficient as it will take more time to find non-collision coordinates at the snake grows
 - UI is basic, I chose to focus on the game functionality instead of the UI
+- No start screen
+- Link to Tamagotchi talk
+- Issue with user doing quick keypresses & using the setTimeout

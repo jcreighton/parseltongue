@@ -5,6 +5,7 @@ class Snake {
     this.build = this.build.bind(this);
     this.move = this.move.bind(this);
     this.grow = this.grow.bind(this);
+    this.reset = this.reset.bind(this, length);
   }
 
   build(x, y, grid) {
@@ -31,5 +32,9 @@ class Snake {
 
   grow() {
     this.length++;
+  }
+
+  reset(length) {
+    this.length = length;
   }
 }
