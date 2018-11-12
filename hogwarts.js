@@ -13,5 +13,6 @@ export const HOUSES = {
 };
 
 export function hogwartsColor() {
-  return HOUSES[Object.keys(HOUSES)[randomNumber(0, 3)]];
+  const keys = Object.keys(HOUSES);
+  return HOUSES[keys[randomNumber(0, keys.length)]];
 };
